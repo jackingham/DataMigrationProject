@@ -15,7 +15,8 @@ gender CHAR,
 email VARCHAR(50),
 dateOfBirth DATE,
 dateOfJoining DATE,
-SALARY INT(6));```
+SALARY INT(6));
+```
 
 It is necessary to drop the table manually after the program is run
 
