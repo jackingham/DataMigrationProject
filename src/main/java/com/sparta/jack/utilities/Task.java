@@ -4,17 +4,10 @@ import com.sparta.jack.database.EmployeeDAO;
 import com.sparta.jack.database.EmployeeDTO;
 import com.sparta.jack.database.EmployeesHashMap;
 import java.sql.PreparedStatement;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 
 public class Task implements Runnable {
-
-    private static HashMap<String, EmployeeDTO> employeesMap;
-    private int insertionCount = 0;
-    Object key = new Object();
-
 
 
     @Override
@@ -23,13 +16,11 @@ public class Task implements Runnable {
         PreparedStatement ps = myEmployeeDAO.makePreparedStatement();
         Timer.startTimer();
         while (EmployeesHashMap.it.hasNext()) {
-            ++insertionCount;
-            //Printer.printMessage("Thread "+Thread.currentThread().getName()+" is inserting record number"+(insertionCount));
             EmployeeDTO newEmployee = getNextEmployee();
             myEmployeeDAO.InsertEmployee(newEmployee, ps);
         }
 
-        Printer.printMessage(Thread.currentThread().getName()+" finished "+Timer.stopTimerAndGetTime()+" seconds and inserted "+insertionCount+" records");
+        Printer.printMessage(Thread.currentThread().getName()+" finished in "+Timer.stopTimerAndGetTime()+" seconds");
     }
 
     public synchronized static EmployeeDTO getNextEmployee(){

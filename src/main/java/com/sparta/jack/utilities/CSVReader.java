@@ -7,14 +7,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class CSVReader {
 
-    private  static HashMap<String, EmployeeDTO> employeesMap = new HashMap<>();
-    private  static HashMap<String, EmployeeDTO> duplicateMap = new HashMap<>();
+    private  static ConcurrentHashMap<String, EmployeeDTO> employeesMap = new ConcurrentHashMap<>();
+    private  static ConcurrentHashMap<String, EmployeeDTO> duplicateMap = new ConcurrentHashMap<>();
 
-    public static HashMap<String, EmployeeDTO> readFromFile(String inputFile) {
+    public static ConcurrentHashMap<String, EmployeeDTO> readFromFile(String inputFile) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader((new FileInputStream(inputFile))))) {
             String line;
             br.readLine(); //removes first line with column names
@@ -34,7 +35,7 @@ public class CSVReader {
         return employeesMap;
     }
 
-    public static HashMap<String, EmployeeDTO> returnDuplicates(){
+    public static ConcurrentHashMap<String, EmployeeDTO> returnDuplicates(){
         return duplicateMap;
     }
 }
