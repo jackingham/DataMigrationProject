@@ -12,6 +12,8 @@ public class EmployeeDAO {
 
     private final String insertNewRecord = "INSERT INTO Employees VALUES(?,?,?,?,?,?,?,?,?,?)";
 
+    private final String truncateTable = "TRUNCATE TABLE Employees";
+
     private Connection connectToDatabase() {
         try {
             properties.load(new FileReader("resources/login.properties"));
@@ -24,7 +26,7 @@ public class EmployeeDAO {
         return connection;
     }
 
-    public void InsertEmployee(EmployeeDTO employeeIn, PreparedStatement preparedStatement) {
+    public void insertEmployee(EmployeeDTO employeeIn, PreparedStatement preparedStatement) {
         try {
             preparedStatement.setString(1, employeeIn.getEmpID());
             preparedStatement.setString(2, employeeIn.getNamePrefix());
@@ -52,6 +54,17 @@ public class EmployeeDAO {
             throwables.printStackTrace();
         }
         return preparedStatement;
+    }
+
+    public void truncateTable(){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connectToDatabase().prepareStatement(truncateTable);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
 
